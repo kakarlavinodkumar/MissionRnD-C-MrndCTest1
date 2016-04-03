@@ -31,7 +31,55 @@ Difficulty : Medium
 #include <stdio.h>
 #include <math.h>
 
+void geometric(int *arr, int size, int *res)
+{
+	int index, ratio;
+	for (index = 0; index < size - 2; index++)
+	{
+		if (((float)arr[index + 1] / arr[index]) == ((float)arr[index + 2] / arr[index + 1]))
+		{
+			ratio = arr[index + 1] / arr[index];
+			break;
+		}
+	}
+	res[4] = index;
+	for (index += 1; index < size; index++)
+	{
+		if (arr[index] != arr[index - 1] * ratio)
+			break;
+	}
+	res[5] = index - 1;
+}
+void arithe_matic(int *arr, int size, int *res,int res_index)
+{
+	int index, index_start,diff;
+
+	for (index = 0; index < size; index++)
+	{
+		if (arr[index + 1] - arr[index] == arr[index + 2] - arr[index + 1])
+		{
+			index_start = index;
+			diff = arr[index + 1] - arr[index];
+			break;
+		}
+	}
+	res[res_index] = index_start;
+	res_index += 1;
+	for (; index < size; index++)
+	{
+		if (arr[index] != arr[index - 1] + diff)
+			break;
+	} 
+	res[res_index] = index-1;
+}
 int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
+	int *res, index, index_start;
+	if (arr==NULL||len<=0)
 	return NULL;
+	res = (int *)malloc(sizeof(int)* 6);
+	arithe_matic(arr, len, res, 0);
+	arithe_matic(arr, len, res, 2);
+	geometric(arr, len, res);
+	return res;
 }

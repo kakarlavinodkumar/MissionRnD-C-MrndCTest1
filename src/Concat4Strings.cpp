@@ -29,5 +29,19 @@ Difficulty : Hard
 
 char * concat_4strings(char *s1, char *s2, char *s3, char *s4){
 	//Return the new string created.
-	return NULL;
+	int index,index1;
+	char *res;
+	bool *hash_table;
+	if (s1 == NULL || s2 == NULL || s3 == NULL || s4 == NULL)
+		return NULL;
+	res = (char *)malloc(sizeof(char)*(strlen(s1) + strlen(s2) + strlen(s3) + strlen(s4) + 1));
+	hash_table = (bool *)calloc(4, sizeof(bool));
+	res = "\0";
+	for (index = 0; index < 4; index++)
+	{
+		if (strstr(res, s1) == 0)
+		{
+
+		}
+	}
 }

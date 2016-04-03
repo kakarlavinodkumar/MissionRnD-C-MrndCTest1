@@ -32,7 +32,65 @@ struct node{
 	int data;
 	struct node *next;
 };
+void convert_to_single_list(struct node **head)
+{ 
+	struct node *temp;
+	int count = 0;
+	for (temp = *head; temp->next != *head;)
+	{
+		count++;
+		temp = temp->next;
+	}
+	temp->next = NULL;
+	//return count;
+}
+void merge(struct node *start1, struct node *start2,struct node **head1)
+{
+	struct node *res_start=NULL,*temp1,*temp2,*newnode,*current=NULL;
+	for (temp1 = start1, temp2 = start2; temp1 != NULL&&temp2 != NULL;)
+	{
+		if (temp1->data < temp2->data)
+		{
+			newnode = temp1;
+			temp1 = temp1->next;
+		}
+		else
+		{
+			newnode = temp2;
+			temp2 = temp2->next;
+		}
+		if (res_start == NULL)
+			res_start = newnode;
+		else
+			current->next = newnode;
+		current = newnode;
+	}
+	if (temp1 == NULL)
+		current->next = temp2;
+	else
+		current->next = temp1;
+	for (; current->next != NULL;)
+		current = current->next;
+	current->next = *head1;
+	//return res_start;
+}
 int merge_circularlists(struct node **head1, struct node **head2){
 	//Returns Length of merged Sorted circular SLL and also points *head1 to final SLL .
+	struct node *temp1, *temp2,*temp;
+	int count;
+	if (head1==NULL||head2==NULL)
 	return -1;
+	for (count = 1, temp = *head1; temp->next != *head1; temp = temp->next)
+		count++;
+	for(temp2=*head2; temp2->next!= *head2; temp2 = temp2->next)
+		count++;
+	convert_to_single_list(head1);
+	convert_to_single_list(head2);
+	temp1 = *head1;
+	temp2 = *head2;
+	if ((*head2)->data < (*head1)->data)
+		head1 = head2;
+	merge(temp1, temp2, head1);
+	return count;
+
 }
